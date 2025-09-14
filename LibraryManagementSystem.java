@@ -12,7 +12,7 @@ public class LibraryManagementSystem {
         while(true){
             System.out.println("\n==========Library Menu=======");
             System.out.println("1.Add Book");
-            System.out.println("2. View Book");
+            System.out.println("2.View Book");
             System.out.println("3.Issue Book");
             System.out.println("4.Return Book");
             System.out.println("5.Exit");
@@ -51,9 +51,9 @@ public class LibraryManagementSystem {
     }
 
     private static void  issueBook(){
-        System.out.println("Enter book id :");
+        System.out.println("Enter user id :");
         int uid=sc.nextInt();
-        System.out.println("Enter book name: ");
+        System.out.println("Enter book id: ");
         int bid=sc.nextInt();
 
         for(Book b : books){
