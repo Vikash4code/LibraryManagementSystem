@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Library Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: auto;
+            background: white;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background: #333;
+            color: white;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Library Book Catalog</h2>
+
+    <table id="bookTable">
+        <thead>
+            <tr>
+                <th>Book ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Issued</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will come here -->
+        </tbody>
+    </table>
+
+    <script>
+        // TEMP DATA (replace later with backend API)
+        const books = [
+            { id: 1, title: "1984", author: "George Orwell", issued: true },
+            { id: 2, title: "The Hobbit", author: "J.R.R. Tolkien", issued: false }
+        ];
+
+        const tableBody = document.querySelector("#bookTable tbody");
+
+        books.forEach(book => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+            <td>${book.id}</td>
+            <td>${book.title}</td>
+            <td>${book.author}</td>
+            <td>${book.issued ? "Yes" : "No"}</td>
+        `;
+
+            tableBody.appendChild(row);
+        });
+    </script>
+
+</body>
+
+</html>
