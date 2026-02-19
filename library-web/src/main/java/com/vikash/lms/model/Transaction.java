@@ -1,3 +1,4 @@
+package com.vikash.lms.model;
 import java.time.LocalDate;
 
 public class Transaction {
