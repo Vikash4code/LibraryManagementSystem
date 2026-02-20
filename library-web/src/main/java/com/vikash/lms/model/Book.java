@@ -1,35 +1,41 @@
 package com.vikash.lms.model;
-public class Book{
+
+public class Book {
+
     private int id;
     private String title;
     private String author;
     private boolean isIssued;
 
-    public Book(int id ,String title, String author){ //constructor
-        this.id=id;
-        this.title=title;
-        this.author=author;
-        this.isIssued=false;
+    public Book(int id, String title, String author) { 
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.isIssued = false;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
-    public String getTitle(){
+
+    public String getTitle() {
         return title;
     }
-    public String getAuthor(){
+
+    public String getAuthor() {
         return author;
     }
-    public boolean isIssued(){
+
+    public boolean isIssued() {
         return isIssued;
     }
 
-    public void setIssued(boolean issued){
-        isIssued=issued;
+    public void setIssued(boolean issued) {
+        isIssued = issued;
     }
-    
-    public String toString(){
-        return id +" | "+title+" | "+ author+" | "+ (isIssued? "Issued": "Available");
+
+    @Override
+    public String toString() {
+        return id + " | " + title + " | " + author + " | " + (isIssued ? "Issued" : "Available");
     }
 }
