@@ -7,7 +7,7 @@
 <body>
 
 <h1>${message}</h1>
-<p>JSP is rendering data from Servlet successfully 🎉</p>
+<p>JSP  rendering data from Servlet successfully 🎉</p>
 
 </body>
 </html>

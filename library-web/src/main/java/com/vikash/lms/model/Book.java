@@ -5,13 +5,34 @@ public class Book {
     private int id;
     private String title;
     private String author;
-    private boolean isIssued;
+    private String isbn;
+    private String category;
+    private int totalCopies;
+    private int availableCopies;
 
-    public Book(int id, String title, String author) { 
+    public Book(String title, String author,
+            String isbn, String category,
+            int totalCopies, int availableCopies) {
+
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.category = category;
+        this.totalCopies = totalCopies;
+        this.availableCopies = availableCopies;
+    }
+
+    public Book(int id, String title, String author,
+            String isbn, String category,
+            int totalCopies, int availableCopies) {
+
         this.id = id;
         this.title = title;
         this.author = author;
-        this.isIssued = false;
+        this.isbn = isbn;
+        this.category = category;
+        this.totalCopies = totalCopies;
+        this.availableCopies = availableCopies;
     }
 
     public int getId() {
@@ -26,16 +47,19 @@ public class Book {
         return author;
     }
 
-    public boolean isIssued() {
-        return isIssued;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setIssued(boolean issued) {
-        isIssued = issued;
+    public String getCategory() {
+        return category;
     }
 
-    @Override
-    public String toString() {
-        return id + " | " + title + " | " + author + " | " + (isIssued ? "Issued" : "Available");
+    public int getTotalCopies() {
+        return totalCopies;
+    }
+
+    public int getAvailableCopies() {
+        return availableCopies;
     }
 }

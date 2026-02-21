@@ -1,17 +1,25 @@
 package com.vikash.lms.util;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DBConnection {
 
-    public static Connection getConnection() throws Exception {
+    private static final String URL = "jdbc:mysql://localhost:3306/smart_lms?useSSL=false&serverTimezone=UTC";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
 
-        String url = "jdbc:mysql://localhost:3306/lms";
-        String user = "root";
-        String pass = "root";
+    static {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("MySQL Driver Loaded Successfully");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-
-        return DriverManager.getConnection(url, user, pass);
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }

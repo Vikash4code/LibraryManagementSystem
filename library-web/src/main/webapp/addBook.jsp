@@ -1,26 +1,40 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Book</title>
-</head>
-<body>
+    <!DOCTYPE html>
+    <html>
 
-<h2>Add New Book</h2>
+    <head>
+        <title>Add Book</title>
+    </head>
 
-<form action="addBook" method="post">
-    <label>Book ID:</label><br>
-    <input type="text" name="id" required><br><br>
+    <body>
 
-    <label>Title:</label><br>
-    <input type="text" name="title" required><br><br>
+        <h2>Add New Book</h2>
 
-    <label>Author:</label><br>
-    <input type="text" name="author" required><br><br>
+        <form action="addBook" method="post">
 
-    <button type="submit">Add Book</button>
-</form>
+            Title:<br>
+            <input type="text" name="title" required><br><br>
 
-</body>
-</html>
+            Author:<br>
+            <input type="text" name="author" required><br><br>
+
+            ISBN:<br>
+            <input type="text" name="isbn"><br><br>
+
+            Category:<br>
+            <input type="text" name="category"><br><br>
+
+            Total Copies:<br>
+            <input type="number" name="totalCopies" required><br><br>
+
+            Available Copies:<br>
+            <input type="number" name="availableCopies" required><br><br>
+
+            <button type="submit">Add Book</button>
+
+        </form>
+
+    </body>
+
+    </html>

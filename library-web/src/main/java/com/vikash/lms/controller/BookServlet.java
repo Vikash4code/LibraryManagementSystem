@@ -1,5 +1,6 @@
 package com.vikash.lms.controller;
 
+import com.vikash.lms.dao.BookDAO;
 import com.vikash.lms.model.Book;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -9,29 +10,33 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/addBook")
 public class BookServlet extends HttpServlet {
 
-    private static final List<Book> bookList = new ArrayList<>();
+    private BookDAO bookDAO = new BookDAO();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int id = Integer.parseInt(request.getParameter("id"));
         String title = request.getParameter("title");
         String author = request.getParameter("author");
+        String isbn = request.getParameter("isbn");
+        String category = request.getParameter("category");
+        int totalCopies = Integer.parseInt(request.getParameter("totalCopies"));
+        int availableCopies = Integer.parseInt(request.getParameter("availableCopies"));
 
-        Book book = new Book(id, title, author);
-        bookList.add(book);
+        Book book = new Book(title, author, isbn, category, totalCopies, availableCopies);
 
-        request.setAttribute("message", "Book Added Successfully!");
-        request.setAttribute("books", bookList);
+        bookDAO.addBook(book);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("bookSuccess.jsp");
+        List<Book> books = bookDAO.getAllBooks();
+
+        request.setAttribute("books", books);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("viewBooks.jsp");
         dispatcher.forward(request, response);
     }
 }
