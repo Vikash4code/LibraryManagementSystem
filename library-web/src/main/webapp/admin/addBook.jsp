@@ -11,7 +11,7 @@
 
         <h2>Add New Book</h2>
 
-        <form action="addBook" method="post">
+        <form action="<%= request.getContextPath() %>/addBook" method="post">
 
             Title:<br>
             <input type="text" name="title" required><br><br>

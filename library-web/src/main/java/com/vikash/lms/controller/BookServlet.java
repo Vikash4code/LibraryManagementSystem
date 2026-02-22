@@ -18,8 +18,9 @@ public class BookServlet extends HttpServlet {
     private BookDAO bookDAO = new BookDAO();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request,
+            HttpServletResponse response)
+            throws IOException {
 
         String title = request.getParameter("title");
         String author = request.getParameter("author");
@@ -28,15 +29,11 @@ public class BookServlet extends HttpServlet {
         int totalCopies = Integer.parseInt(request.getParameter("totalCopies"));
         int availableCopies = Integer.parseInt(request.getParameter("availableCopies"));
 
-        Book book = new Book(title, author, isbn, category, totalCopies, availableCopies);
+        Book book = new Book(0, title, author, isbn, category, totalCopies, availableCopies);
 
         bookDAO.addBook(book);
 
-        List<Book> books = bookDAO.getAllBooks();
-
-        request.setAttribute("books", books);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("viewBooks.jsp");
-        dispatcher.forward(request, response);
+        // IMPORTANT: Redirect to servlet, NOT JSP
+        response.sendRedirect(request.getContextPath() + "/books");
     }
 }
