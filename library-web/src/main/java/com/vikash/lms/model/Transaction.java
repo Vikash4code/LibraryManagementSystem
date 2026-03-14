@@ -1,23 +1,72 @@
 package com.vikash.lms.model;
-import java.time.LocalDate;
+
+import java.util.Date;
 
 public class Transaction {
+
+    private int id;
     private int userId;
     private int bookId;
-    private LocalDate issueDate;
-    private LocalDate returnDate;
+    private Date issueDate;
+    private Date dueDate;
+    private Date returnDate;
+    private String status;
 
-    public Transaction(int userId,int bookId){
-        this.userId=userId;
-        this.bookId=bookId;
-        this.issueDate=LocalDate.now();
-        this.returnDate=null;
-    }
-    public void returnBook(){
-        this.returnDate=LocalDate.now();
-    }
-    public String toString(){
-        return "User :"+ userId+ ", Book :"+bookId+", Issued :"+issueDate +",  Returned : "+(returnDate==null ? "Not Returned" : returnDate);
+    public Transaction() {}
+
+    public int getId() {
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public Date getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public Date getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(Date returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

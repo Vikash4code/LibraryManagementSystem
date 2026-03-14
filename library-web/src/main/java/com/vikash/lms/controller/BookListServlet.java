@@ -2,6 +2,7 @@ package com.vikash.lms.controller;
 
 import com.vikash.lms.dao.BookDAO;
 import com.vikash.lms.model.Book;
+
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -19,12 +20,19 @@ public class BookListServlet extends HttpServlet {
                          HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Book> books = bookDAO.getAllBooks();
+        String query = request.getParameter("query");
+
+        List<Book> books;
+
+        if (query != null && !query.trim().isEmpty()) {
+            books = bookDAO.searchBooks(query);
+        } else {
+            books = bookDAO.getAllBooks();
+        }
+
         request.setAttribute("books", books);
 
-        RequestDispatcher dispatcher =
-                request.getRequestDispatcher("/common/books.jsp");
-
-        dispatcher.forward(request, response);
+        request.getRequestDispatcher("/common/books.jsp")
+               .forward(request, response);
     }
 }
