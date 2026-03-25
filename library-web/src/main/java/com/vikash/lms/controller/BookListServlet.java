@@ -2,22 +2,20 @@ package com.vikash.lms.controller;
 
 import com.vikash.lms.dao.BookDAO;
 import com.vikash.lms.model.Book;
-
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/books")
+@WebServlet("/student/books")
 public class BookListServlet extends HttpServlet {
 
     private BookDAO bookDAO = new BookDAO();
 
     @Override
     protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
+            HttpServletResponse response)
             throws ServletException, IOException {
 
         String query = request.getParameter("query");
@@ -33,6 +31,6 @@ public class BookListServlet extends HttpServlet {
         request.setAttribute("books", books);
 
         request.getRequestDispatcher("/common/books.jsp")
-               .forward(request, response);
+                .forward(request, response);
     }
 }

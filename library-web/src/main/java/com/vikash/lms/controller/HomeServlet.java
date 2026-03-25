@@ -5,19 +5,14 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
 
-@WebServlet("/home")
+@WebServlet("/") // 🔥 ROOT URL HANDLER
 public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String message = "Welcome to Library Management System 🚀";
-
-        request.setAttribute("message", message);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-        dispatcher.forward(request, response);
+        // ✅ Always allow homepage
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
-
 }

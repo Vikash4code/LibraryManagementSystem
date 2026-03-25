@@ -20,15 +20,25 @@ public class LoginServlet extends HttpServlet {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String role = request.getParameter("role");
 
         User user = userDAO.validateUser(email, password);
 
         if (user != null) {
+            if (role == null || role.isEmpty()) {
+                response.sendRedirect("login.jsp?error=role");
+                return;
+            }
+
+            if (!user.getRole().equalsIgnoreCase(role)) {
+                response.sendRedirect("login.jsp?error=wrongrole&selected=" + role);
+                return;
+            }
 
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
 
-            if (user.getRole().equals("ADMIN")) {
+            if (user.getRole().equalsIgnoreCase("ADMIN")) {
                 response.sendRedirect("admin/adminDashboard.jsp");
             } else {
                 response.sendRedirect("student/studentDashboard.jsp");
