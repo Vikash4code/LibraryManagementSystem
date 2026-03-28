@@ -14,7 +14,7 @@ import java.util.List;
 public class TransactionListServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request,
-            HttpServletResponse response)
+            HttpServletResponse response) 
             throws ServletException, IOException {
 
         TransactionDAO dao = new TransactionDAO();

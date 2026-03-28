@@ -20,7 +20,7 @@ public class Book {
 
         this.title = title;
         this.author = author;
-        this.isbn = isbn;
+        this.isbn = isbn; 
         this.category = category;
         this.totalCopies = totalCopies;
         this.availableCopies = availableCopies;

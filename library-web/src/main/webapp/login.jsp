@@ -17,12 +17,19 @@
                     </button>
                 </div>
 
+                <p style="margin:0 0 1rem; color:#444; font-size:0.95rem;">
+                    Use admin@library.com / admin123 for the built-in admin account, or register as a student.
+                </p>
+                <div style="margin-bottom:1rem; padding:1rem; background:#eef6ff; border:1px solid #c7dbff; border-radius:8px; color:#1f4e8c; font-size:0.95rem;">
+                    <strong>Fine policy:</strong> If a book is not returned within 10 minutes of issue, a fine of <strong>₹10 per minute</strong> will be charged.
+                </div>
+
                 <!-- FORM -->
                 <form action="login" method="post" class="form-grid">
 
                     <div>
                         <label for="email">Email</label>
-                        <input class="form-control" type="email" id="email" name="email" placeholder="Enter your email"
+                         <input class="form-control" type="email" id="email" name="email" placeholder="Enter your email"
                             required>
                     </div>
 
@@ -41,17 +48,25 @@
                     </div>
                 </form>
 
-                <!-- ERROR MESSAGES -->
-                <% String error=request.getParameter("error"); if ("invalid".equals(error)) { %>
+                <!-- MESSAGES -->
+                <% String message = request.getParameter("message");
+                   String error = request.getParameter("error");
+                   if ("registered".equals(message)) { %>
+                    <div class="alert" style="background:#e6ffea;color:#1c6625;">Registration successful. Please login below.</div>
+                <% } else if ("invalid".equals(error)) { %>
                     <div class="alert error">Invalid credentials. Please check email and password.</div>
-                    <% } else if ("wrongrole".equals(error)) { %>
-                        <div class="alert error">
-                            Role mismatch: You selected <%= request.getParameter("selected") %> and your account role
-                                differs.
-                        </div>
-                        <% } else if ("role".equals(error)) { %>
-                            <div class="alert error">Please select admin or student mode before login.</div>
-                            <% } %>
+                <% } else if ("wrongrole".equals(error)) { %>
+                    <div class="alert error">
+                        Role mismatch: You selected <%= request.getParameter("selected") %> and your account role differs.
+                    </div>
+                <% } else if ("role".equals(error)) { %>
+                    <div class="alert error">Please select admin or student mode before login.</div>
+                <% } %>
+<!-- 
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem; justify-content:center;">
+                    <a href="<%= request.getContextPath() %>/books" class="nav-btn" style="width:calc(50% - 0.5rem); text-align:center;">Browse Books</a>
+                    <a href="<%= request.getContextPath() %>/register.jsp" class="nav-btn" style="width:calc(50% - 0.5rem); text-align:center;">Register</a>
+                </div> -->
 
             </div>
         </div>

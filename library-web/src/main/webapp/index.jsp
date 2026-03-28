@@ -10,10 +10,7 @@
                 </p>
 
                 <div style="margin-top:1.5rem; display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
-                    <a href="<%= request.getContextPath() %>/login.jsp" class="primary"
-                        style="padding:0.6rem 1.2rem; text-decoration:none;">
-                        Login
-                    </a>
+                    <p style="margin:0; color:#555; max-width:600px; text-align:center;">Use the header above to browse books, get help, contact support, login, or register.</p>
                 </div>
             </section>
 
@@ -84,7 +81,7 @@
 
                     <div style="border-left:4px solid #ffc107;padding:0.5rem 1rem;background:#fffdf5;">
                         ⚠️ Students are advised to return overdue books to avoid fines.
-                    </div>
+                     </div>
                 </div>
             </section>
 

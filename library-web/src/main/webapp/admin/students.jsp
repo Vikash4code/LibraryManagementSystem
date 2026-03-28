@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.vikash.lms.model.User" %>
 <%@ include file="/common/header.jsp" %>
@@ -18,7 +19,7 @@
         </div>
 
     <% } else { %>
-
+ 
         <!-- TABLE -->
         <div style="overflow-x:auto;">
             <table style="width:100%; border-collapse:collapse;">

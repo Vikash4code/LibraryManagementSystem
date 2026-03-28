@@ -22,6 +22,18 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         String role = request.getParameter("role");
 
+        if (email != null) {
+            email = email.trim();
+        }
+        if (password != null) {
+            password = password.trim();
+        }
+
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+            response.sendRedirect("login.jsp?error=invalid");
+            return;
+        }
+
         User user = userDAO.validateUser(email, password);
 
         if (user != null) {
@@ -37,6 +49,7 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
+            session.setAttribute("role", user.getRole());
 
             if (user.getRole().equalsIgnoreCase("ADMIN")) {
                 response.sendRedirect("admin/adminDashboard.jsp");
@@ -48,4 +61,4 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect("login.jsp?error=invalid");
         }
     }
-}
+} 

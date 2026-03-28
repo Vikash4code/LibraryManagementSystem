@@ -22,9 +22,18 @@ public class AuthFilter implements Filter {
         String uri = req.getRequestURI();
         String path = uri.substring(contextPath.length());
 
-        if (path.equals("/login.jsp") ||
+        if (path.equals("/") ||
+                path.equals("/index.jsp") ||
+                path.equals("/login.jsp") ||
+                path.equals("/register.jsp") ||
                 path.equals("/login") ||
-                path.equals("/logout")) {
+                path.equals("/register") ||
+                path.equals("/logout") || 
+                path.equals("/books") ||
+                path.equals("/books.jsp") ||
+                path.equals("/student/books") ||
+                path.equals("/help.jsp") ||
+                path.equals("/contactus.jsp")) {
 
             chain.doFilter(request, response);
             return;

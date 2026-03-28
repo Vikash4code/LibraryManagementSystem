@@ -9,7 +9,6 @@ import java.util.List;
 
 public class BookDAO {
 
-    // ADD BOOK
     public void addBook(Book book) {
 
         String sql = "INSERT INTO books (title, author, isbn, category, total_copies, available_copies) VALUES (?, ?, ?, ?, ?, ?)";
@@ -17,12 +16,16 @@ public class BookDAO {
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
+            // Validation: available_copies cannot exceed total_copies
+            int availableCopies = Math.min(book.getAvailableCopies(), book.getTotalCopies());
+            availableCopies = Math.max(availableCopies, 0); // Also ensure non-negative
+
             stmt.setString(1, book.getTitle());
             stmt.setString(2, book.getAuthor());
             stmt.setString(3, book.getIsbn());
             stmt.setString(4, book.getCategory());
             stmt.setInt(5, book.getTotalCopies());
-            stmt.setInt(6, book.getAvailableCopies());
+            stmt.setInt(6, availableCopies);
 
             stmt.executeUpdate();
 
@@ -151,6 +154,39 @@ public class BookDAO {
         return books;
     }
 
+    public List<Book> searchAvailableBooks(String query) {
+        List<Book> books = new ArrayList<>();
+        String sql = "SELECT * FROM books WHERE available_copies > 0 " +
+                     "AND (LOWER(title) LIKE ? OR LOWER(author) LIKE ? OR LOWER(isbn) LIKE ?)";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            String searchPattern = "%" + query.toLowerCase() + "%";
+            ps.setString(1, searchPattern);
+            ps.setString(2, searchPattern);
+            ps.setString(3, searchPattern);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Book book = new Book();
+                    book.setId(rs.getInt("id"));
+                    book.setTitle(rs.getString("title"));
+                    book.setAuthor(rs.getString("author"));
+                    book.setIsbn(rs.getString("isbn"));
+                    book.setCategory(rs.getString("category"));
+                    book.setTotalCopies(rs.getInt("total_copies"));
+                    book.setAvailableCopies(rs.getInt("available_copies"));
+                    books.add(book);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return books;
+    }
+
     // CHECK AVAILABLE COPIES
     public int getAvailableCopies(int bookId) {
 
@@ -201,7 +237,7 @@ public class BookDAO {
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, bookId);
-            stmt.executeUpdate();
+            stmt.executeUpdate(); 
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -248,12 +284,16 @@ public class BookDAO {
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
+            // Validation: available_copies cannot exceed total_copies
+            int availableCopies = Math.min(book.getAvailableCopies(), book.getTotalCopies());
+            availableCopies = Math.max(availableCopies, 0); // Ensure non-negative
+
             ps.setString(1, book.getTitle());
             ps.setString(2, book.getAuthor());
             ps.setString(3, book.getIsbn());
             ps.setString(4, book.getCategory());
             ps.setInt(5, book.getTotalCopies());
-            ps.setInt(6, book.getAvailableCopies());
+            ps.setInt(6, availableCopies);
             ps.setInt(7, book.getId());
 
             ps.executeUpdate();

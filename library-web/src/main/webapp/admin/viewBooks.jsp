@@ -23,7 +23,7 @@
             </tr>
             <%    }
                }
-            %>
+            %> 
         </tbody>
     </table>
     <div class="form-controls" style="margin-top: 1rem;"><a class="primary" style="display:inline-block;text-decoration:none;" href="addBook.jsp">Add Another Book</a></div>

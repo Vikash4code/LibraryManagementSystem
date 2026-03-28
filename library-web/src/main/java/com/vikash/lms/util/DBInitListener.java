@@ -38,18 +38,40 @@ public class DBInitListener implements ServletContextListener {
                     + "book_id INT NOT NULL, "
                     + "user_id INT NOT NULL, "
                     + "issue_date DATE, "
+                    + "due_date DATE, "
                     + "return_date DATE, "
                     + "status VARCHAR(50), "
                     + "FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE, "
                     + "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
                     + ")");
 
-            // Insert default admin if not exists
-            stmt.executeUpdate("INSERT INTO users (name, email, password, role) "
-                    + "SELECT 'Administrator', 'admin@library.com', 'admin123', 'ADMIN' "
-                    + "FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM users WHERE email='admin@library.com')");
+            // Create fines table
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS fines ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY, " 
+                    + "transaction_id INT NOT NULL, "
+                    + "user_id INT NOT NULL, "
+                    + "book_id INT NOT NULL, "
+                    + "amount DECIMAL(10,2) NOT NULL, "
+                    + "days_overdue INT NOT NULL, "
+                    + "fine_date DATE NOT NULL, "
+                    + "status VARCHAR(20) DEFAULT 'PENDING', "
+                    + "FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE, "
+                    + "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE, "
+                    + "FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE"
+                    + ")");
 
-            System.out.println("DBInitListener: default tables checked and default admin ensured.");
+            // Insert default admin if not exists
+            stmt.executeUpdate("INSERT IGNORE INTO users (name, email, password, role) VALUES "
+                    + "('Administrator', 'admin@library.com', 'admin123', 'ADMIN')");
+
+            // Add more admins here (optional)
+            stmt.executeUpdate("INSERT IGNORE INTO users (name, email, password, role) VALUES "
+                    + "('Admin Manager', 'manager@library.com', 'manager123', 'ADMIN')");
+
+            stmt.executeUpdate("INSERT IGNORE INTO users (name, email, password, role) VALUES "
+                    + "('Head Librarian', 'librarian@library.com', 'librarian123', 'ADMIN')");
+
+            System.out.println("DBInitListener: default tables checked and default admins ensured.");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -46,7 +46,7 @@ public class Transaction {
         this.issueDate = issueDate;
     }
 
-    public Date getDueDate() {
+    public Date getDueDate() { 
         return dueDate;
     }
 

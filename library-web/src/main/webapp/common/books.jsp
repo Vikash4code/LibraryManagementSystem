@@ -5,6 +5,7 @@
 
 <%
 User user = (User) session.getAttribute("user");
+String role = (user != null) ? user.getRole() : "GUEST";
 List<Book> books = (List<Book>) request.getAttribute("books");
 %>
 
@@ -15,7 +16,7 @@ Search:
 <input type="text" name="query">
 <input type="submit" value="Search">
 </form>
-
+ 
 <br>
 
 <table border="1">
@@ -29,7 +30,7 @@ Search:
 <th>Total</th>
 <th>Available</th>
 
-<% if(user.getRole().equals("ADMIN")){ %>
+<% if("ADMIN".equals(role)){ %>
 <th>Actions</th>
 <% } %>
 
@@ -49,7 +50,7 @@ for(Book b : books){
 <td><%= b.getTotalCopies() %></td>
 <td><%= b.getAvailableCopies() %></td>
 
-<% if(user.getRole().equals("ADMIN")){ %>
+<% if ("ADMIN".equals(role)) { %>
 
 <td>
 
@@ -77,7 +78,7 @@ Delete
 
 <br>
 
-<% if(user.getRole().equals("ADMIN")){ %>
+<% if("ADMIN".equals(role)){ %>
 
 <a href="<%= request.getContextPath() %>/admin/addBook.jsp">
 Add New Book

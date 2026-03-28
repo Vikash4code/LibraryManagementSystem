@@ -1,6 +1,8 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.vikash.lms.model.Transaction" %>
 <%@ include file="/common/header.jsp" %>
+
 
 <style>
     .card {
@@ -23,7 +25,7 @@
         border-collapse: collapse;
         font-size: 14px;
     }
-
+ 
     thead {
         background: #4CAF50;
         color: white;
@@ -111,11 +113,20 @@
         td:nth-child(4)::before { content: "Issue Date"; }
         td:nth-child(5)::before { content: "Due Date"; }
         td:nth-child(6)::before { content: "Status"; }
+        td:nth-child(7)::before { content: "Action"; }
     }
 </style>
 
 <div class="card">
     <h2 class="page-title">📚 Transactions</h2>
+
+    <% String message = request.getParameter("message");
+       String error = request.getParameter("error");
+       if (message != null) { %>
+        <div style="color: green; margin-bottom: 10px;"><%= message %></div>
+    <% } else if (error != null) { %>
+        <div style="color: red; margin-bottom: 10px;"><%= error %></div>
+    <% } %>
 
     <table>
         <thead>
@@ -126,6 +137,7 @@
                 <th>Issue Date</th>
                 <th>Due Date</th>
                 <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -136,7 +148,7 @@
                 for (Transaction t : list) {
 
                     String statusClass = "";
-                    String status = t.getStatus().toLowerCase();
+                    String status = t.getStatus() != null ? t.getStatus().toLowerCase() : "unknown";
 
                     if (status.contains("issued")) statusClass = "issued";
                     else if (status.contains("returned")) statusClass = "returned";
@@ -146,12 +158,22 @@
                 <td><%= t.getId() %></td>
                 <td><%= t.getUserId() %></td>
                 <td><%= t.getBookId() %></td>
-                <td><%= t.getIssueDate() %></td>
-                <td><%= t.getDueDate() %></td>
+                <td><%= t.getIssueDate() != null ? t.getIssueDate() : "N/A" %></td>
+                <td><%= t.getDueDate() != null ? t.getDueDate() : "N/A" %></td>
                 <td>
                     <span class="status <%=statusClass%>">
-                        <%= t.getStatus() %>
+                        <%= t.getStatus() != null ? t.getStatus() : "UNKNOWN" %>
                     </span>
+                </td>
+                <td>
+                    <% if ("ISSUED".equalsIgnoreCase(t.getStatus())) { %>
+                        <form action="<%= request.getContextPath() %>/returnBook" method="post" style="display: inline;">
+                            <input type="hidden" name="transactionId" value="<%= t.getId() %>">
+                            <button type="submit" style="background: #2196F3; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Return Book</button>
+                        </form>
+                    <% } else { %>
+                        <span style="color: #666;">-</span>
+                    <% } %>
                 </td>
             </tr>
             <%
@@ -159,7 +181,7 @@
             } else {
             %>
             <tr>
-                <td colspan="6">No transactions found.</td>
+                <td colspan="7">No transactions found.</td>
             </tr>
             <% } %>
         </tbody>

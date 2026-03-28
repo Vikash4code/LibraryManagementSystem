@@ -2,15 +2,12 @@ package com.vikash.lms.controller;
 
 import com.vikash.lms.dao.BookDAO;
 import com.vikash.lms.model.Book;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/addBook")
 public class BookServlet extends HttpServlet {
@@ -21,7 +18,7 @@ public class BookServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response)
             throws IOException {
-
+ 
         String title = request.getParameter("title");
         String author = request.getParameter("author");
         String isbn = request.getParameter("isbn");

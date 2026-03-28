@@ -12,7 +12,7 @@ public class DeleteBookServlet extends HttpServlet {
     private BookDAO bookDAO = new BookDAO();
 
     @Override
-    protected void doGet(HttpServletRequest request,
+    protected void doGet(HttpServletRequest request, 
                          HttpServletResponse response)
             throws IOException {
 

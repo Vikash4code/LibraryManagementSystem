@@ -14,7 +14,7 @@ import com.vikash.lms.model.User;
 public class StudentListServlet extends HttpServlet{
 
     protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
+                         HttpServletResponse response) 
                          throws ServletException,IOException{
 
         UserDAO dao=new UserDAO();

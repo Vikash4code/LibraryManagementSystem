@@ -104,7 +104,7 @@
                     • Choose books based on your interests<br>
                     • Take notes while reading<br>
                     • Avoid distractions and create a reading habit
-                </p>
+                 </p>
             </div>
 
             <div class="card">

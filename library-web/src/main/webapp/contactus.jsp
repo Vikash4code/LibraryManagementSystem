@@ -11,7 +11,7 @@
             Have questions or issues? Reach out to us.
         </p>
 
-        <form method="post" action="contact">
+        <form method="post" action="<%= request.getContextPath() %>/contactus.jsp">
             
             <div class="form-grid">
 
@@ -55,9 +55,13 @@
             <div class="alert error">
                 Failed to send message. Try again.
             </div>
+        <% } else if ("".equals(msg) || msg == null) { %>
+            <div style="margin-top:1rem;color:#444;">
+                Use this form to send a message; as a guest, you'll see this confirmation locally (no email backend required).
+            </div>
         <% } %>
 
     </div>
 </div>
 
-<%@ include file="/common/footer.jsp" %>
+<%@ include file="/common/footer.jsp" %> 

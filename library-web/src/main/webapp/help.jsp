@@ -27,5 +27,5 @@
     <p>Only Admin users have permission to manage books and students.</p>
 
 </div>
-
+ 
 <%@ include file="/common/footer.jsp" %>

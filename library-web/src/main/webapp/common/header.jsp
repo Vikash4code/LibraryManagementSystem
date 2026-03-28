@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
 
     <!DOCTYPE html>
     <html>
@@ -17,6 +16,9 @@
             nav {
                 background: #1f4e8c;
                 padding: 0.7rem 1rem;
+                position: sticky;
+                top: 0;
+                z-index: 999;
             }
 
             .nav-container {
@@ -28,11 +30,18 @@
 
             .nav-btn {
                 color: white;
-                padding: 0.4rem 0.8rem;
+                padding: 0.5rem 1rem;
                 border: 1px solid #5fa3ff;
                 border-radius: 6px;
                 text-decoration: none;
                 font-size: 14px;
+                font-weight: 600;
+                transition: .2s;
+            }
+
+            .nav-btn:hover {
+                background: #2d6cdf;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             }
 
             .nav-btn:hover {
@@ -103,32 +112,32 @@
             <nav>
                 <div class="nav-container">
 
-                    <!-- COMMON -->
-                    <a href="<%= request.getContextPath() %>/" class="nav-btn">Home</a>
-                    <% if (role==null) { %>
+                    <% if (role == null) { %>
 
-                        <!-- PUBLIC NAVBAR -->
+                        <!-- PUBLIC NAVBAR: Guest LMS -->
+                        <a href="<%= request.getContextPath() %>/books" class="nav-btn">Browse Books</a>
                         <a href="<%= request.getContextPath() %>/help.jsp" class="nav-btn">Help</a>
-                        <a href="<%= request.getContextPath() %>/contact.jsp" class="nav-btn">Contact Us</a>
+                        <a href="<%= request.getContextPath() %>/contactus.jsp" class="nav-btn">Contact</a>
+                        <a href="<%= request.getContextPath() %>/login.jsp" class="nav-btn">Login</a>
+                        <a href="<%= request.getContextPath() %>/register.jsp" class="nav-btn">Register</a>
 
-                        <% } else if ("ADMIN".equals(role)) { %>
+                    <% } else if ("ADMIN".equals(role)) { %>
 
-                            <!-- ADMIN NAVBAR -->
-                            <a href="<%= request.getContextPath() %>/dashboard.jsp" class="nav-btn">Dashboard</a>
-                            <a href="<%= request.getContextPath() %>/books.jsp" class="nav-btn">Books</a>
-                            <a href="<%= request.getContextPath() %>/students.jsp" class="nav-btn">Students</a>
-                            <a href="<%= request.getContextPath() %>/transactions.jsp" class="nav-btn">Transactions</a>
-                            <a href="<%= request.getContextPath() %>/logout" class="nav-btn">Logout</a>
+                        <!-- ADMIN NAVBAR -->
+                        <a href="<%= request.getContextPath() %>/books" class="nav-btn">Browse Books</a>
+                        <a href="<%= request.getContextPath() %>/admin/adminDashboard.jsp" class="nav-btn">Dashboard</a>
+                        <a href="<%= request.getContextPath() %>/logout" class="nav-btn">Logout</a>
 
-                            <% } else if ("STUDENT".equals(role)) { %>
+                    <% } else if ("STUDENT".equals(role)) { %>
 
-                                <!-- STUDENT NAVBAR -->
-                                <a href="<%= request.getContextPath() %>/dashboard.jsp" class="nav-btn">Dashboard</a>
-                                <a href="<%= request.getContextPath() %>/books.jsp" class="nav-btn">Browse Books</a>
-                                <a href="<%= request.getContextPath() %>/mybooks.jsp" class="nav-btn">My Books</a>
-                                <a href="<%= request.getContextPath() %>/logout" class="nav-btn">Logout</a>
+                        <!-- STUDENT NAVBAR -->
+                        <a href="<%= request.getContextPath() %>/books" class="nav-btn">Browse Books</a>
+                        <a href="<%= request.getContextPath() %>/help.jsp" class="nav-btn">Help</a>
+                        <a href="<%= request.getContextPath() %>/contactus.jsp" class="nav-btn">Contact</a>
+                        <a href="<%= request.getContextPath() %>/student/studentDashboard.jsp" class="nav-btn">Dashboard</a>
+                        <a href="<%= request.getContextPath() %>/logout" class="nav-btn">Logout</a>
 
-                                <% } %>
+                    <% } %>
 
                 </div>
-            </nav>
+            </nav> 

@@ -8,7 +8,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/student/books")
+@WebServlet({"/books", "/student/books"}) 
 public class BookListServlet extends HttpServlet {
 
     private BookDAO bookDAO = new BookDAO();
@@ -30,7 +30,7 @@ public class BookListServlet extends HttpServlet {
 
         request.setAttribute("books", books);
 
-        request.getRequestDispatcher("/common/books.jsp")
+        request.getRequestDispatcher("/books.jsp")
                 .forward(request, response);
     }
 }

@@ -12,7 +12,7 @@ import com.vikash.lms.model.Book;
 @WebServlet("/editBook")
 public class EditBookServlet extends HttpServlet {
 
-    protected void doGet(HttpServletRequest request,
+    protected void doGet(HttpServletRequest request, 
                          HttpServletResponse response)
                          throws ServletException, IOException {
 

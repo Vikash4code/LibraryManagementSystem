@@ -15,4 +15,4 @@ public class HomeServlet extends HttpServlet {
         // ✅ Always allow homepage
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
-}
+} 
