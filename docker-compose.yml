@@ -1,0 +1,46 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: lms-mysql
+    environment:
+      MYSQL_DATABASE: lms_db
+      MYSQL_USER: lms_user
+      MYSQL_PASSWORD: lms_pass
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    # not published to the host on purpose — only the backend container needs it,
+    # and your machine already runs a MySQL on port 3306
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpass"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: lms-backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/lms_db
+      SPRING_DATASOURCE_USERNAME: lms_user
+      SPRING_DATASOURCE_PASSWORD: lms_pass
+      JWT_SECRET: change-this-secret-in-production-min-256-bits-long-okay
+      CORS_ALLOWED_ORIGINS: http://localhost:8088
+    # host 8086 -> container 8080 (host 8080 is used by another app on your machine)
+    ports:
+      - "8086:8080"
+
+  frontend:
+    build: ./frontend
+    container_name: lms-frontend
+    depends_on:
+      - backend
+    # open the app at http://localhost:8088
+    ports:
+      - "8088:80"
+
+volumes:
+  mysql_data:
