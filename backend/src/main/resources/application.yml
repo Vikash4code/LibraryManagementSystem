@@ -29,7 +29,23 @@ spring:
       mail.smtp.starttls.enable: true
 
 server:
-  port: 8080
+  # Render (and most PaaS) inject the port to listen on via $PORT
+  port: ${PORT:8080}
+
+# expose only the health endpoint, used by the platform health check
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+  health:
+    # mail is optional and intentionally unconfigured in production —
+    # don't let an SMTP check mark the whole app unhealthy
+    mail:
+      enabled: false
 
 # application-specific settings
 lms:

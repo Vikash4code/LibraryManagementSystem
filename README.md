@@ -102,15 +102,37 @@ GET    /api/elibrary/search?q=&topic=&page=          free books (Open Library)
 
 Full interactive documentation in Swagger UI.
 
-## Free Deployment (optional)
+## Free Deployment
 
-The app can be deployed entirely on free tiers:
+Deployed entirely on free tiers: **Vercel** (frontend) + **Render** (backend) + **Aiven** (MySQL). Do the steps in order.
 
-- **Backend** → [Render](https://render.com) free web service (uses `backend/Dockerfile`; sleeps after 15 min idle)
-- **MySQL** → [Aiven](https://aiven.io) free tier (add `?sslMode=REQUIRED` to the JDBC URL, keep Hikari pool ≤ 5)
-- **Frontend** → [Vercel](https://vercel.com) (set `VITE_API_URL` to the Render URL; add a SPA rewrite to `index.html`)
+### 1. Database — Aiven free MySQL
+Create an Aiven account → **Create service → MySQL → Free plan**. From the service page note the host, port, user (`avnadmin`), password and default DB (`defaultdb`). Build the JDBC URL (SSL is required):
 
-Set `CORS_ALLOWED_ORIGINS` on Render to the Vercel URL.
+```
+jdbc:mysql://HOST:PORT/defaultdb?sslMode=REQUIRED&allowPublicKeyRetrieval=true
+```
+
+### 2. Backend — Render (Docker)
+New → **Web Service** → connect this repo → **Root Directory: `backend`** (auto-detects the Dockerfile) → **Free** instance. Set **Health Check Path** to `/actuator/health` and these environment variables:
+
+| Key | Value |
+|---|---|
+| `SPRING_DATASOURCE_URL` | the Aiven JDBC URL above |
+| `SPRING_DATASOURCE_USERNAME` | `avnadmin` |
+| `SPRING_DATASOURCE_PASSWORD` | your Aiven password |
+| `JWT_SECRET` | a long random string (≥ 32 chars) |
+| `CORS_ALLOWED_ORIGINS` | the Vercel URL (fill in after step 3) |
+
+Verify `https://<backend>.onrender.com/actuator/health` returns `{"status":"UP"}`.
+
+### 3. Frontend — Vercel
+New Project → import this repo → **Root Directory: `frontend`** (Vite is auto-detected). Add env var `VITE_API_URL` = `https://<backend>.onrender.com` (no trailing slash, no `/api`). Deploy → note the `https://<app>.vercel.app` URL. The included `frontend/vercel.json` handles SPA routing.
+
+### 4. Connect them
+Back in Render, set `CORS_ALLOWED_ORIGINS` to your exact Vercel URL (no trailing slash) and let the backend restart.
+
+> **Caveats:** Render's free instance sleeps after ~15 min idle, so the first request can take 30–60s (an optional cron-job.org ping to `/actuator/health` keeps it warm). Email reminders stay off unless you set `MAIL_USERNAME` / `MAIL_PASSWORD`.
 
 ## Design Notes
 
