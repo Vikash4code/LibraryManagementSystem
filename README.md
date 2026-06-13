@@ -104,13 +104,13 @@ Full interactive documentation in Swagger UI.
 
 ## Free Deployment
 
-Deployed entirely on free tiers: **Vercel** (frontend) + **Render** (backend) + **Aiven** (MySQL). Do the steps in order.
+Deployed entirely on free tiers: **Vercel** (frontend) + **Render** (backend) + **TiDB Cloud Serverless** (MySQL-compatible database). Do the steps in order.
 
-### 1. Database — Aiven free MySQL
-Create an Aiven account → **Create service → MySQL → Free plan**. From the service page note the host, port, user (`avnadmin`), password and default DB (`defaultdb`). Build the JDBC URL (SSL is required):
+### 1. Database — TiDB Cloud Serverless (free, MySQL-compatible)
+Create a [TiDB Cloud](https://tidbcloud.com) account → **Create a Serverless cluster** (free, never sleeps). Click **Connect** and note the host, port (`4000`), user (looks like `xxxxxxxx.root`), password and default DB (`test`). TiDB speaks the MySQL protocol, so the existing `mysql-connector-j` driver works unchanged. Build the JDBC URL (TLS is required):
 
 ```
-jdbc:mysql://HOST:PORT/defaultdb?sslMode=REQUIRED&allowPublicKeyRetrieval=true
+jdbc:mysql://HOST:4000/test?sslMode=REQUIRED&allowPublicKeyRetrieval=true
 ```
 
 ### 2. Backend — Render (Docker)
@@ -118,9 +118,9 @@ New → **Web Service** → connect this repo → **Root Directory: `backend`** 
 
 | Key | Value |
 |---|---|
-| `SPRING_DATASOURCE_URL` | the Aiven JDBC URL above |
-| `SPRING_DATASOURCE_USERNAME` | `avnadmin` |
-| `SPRING_DATASOURCE_PASSWORD` | your Aiven password |
+| `SPRING_DATASOURCE_URL` | the TiDB JDBC URL above |
+| `SPRING_DATASOURCE_USERNAME` | the TiDB user (e.g. `xxxxxxxx.root`) |
+| `SPRING_DATASOURCE_PASSWORD` | your TiDB password |
 | `JWT_SECRET` | a long random string (≥ 32 chars) |
 | `CORS_ALLOWED_ORIGINS` | the Vercel URL (fill in after step 3) |
 
